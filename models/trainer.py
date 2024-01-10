@@ -13,7 +13,7 @@ from models.seq2seq_without_attention import Seq2Seq_WithoutAtt
 from utils.logger import Logger
 from dataset.autocorrect_dataset import AutoCorrectDataset
 from models.loss import LabelSmoothingLoss
-from utils.utils import translate, translate_beam_search, batch_translate_beam_search
+from utils.utils import translate
 from utils.metrics import compute_accuracy
 
 
@@ -32,7 +32,6 @@ class Trainer():
 
         self.device = DEVICE
         self.num_iters = NUM_ITERS
-        self.beamsearch = BEAM_SEARCH
 
         self.batch_size = BATCH_SIZE
         self.print_every = PRINT_PER_ITER
@@ -214,11 +213,7 @@ class Trainer():
         for batch in self.valid_gen:
             batch = self.batch_to_device(batch)
 
-            if self.beamsearch:
-                translated_sentence = batch_translate_beam_search(batch['src'], self.model)
-                prob = None
-            else:
-                translated_sentence, prob = translate(batch['src'], self.model)
+            translated_sentence, prob = translate(batch['src'], self.model)
 
             pred_sent = self.vocab.batch_decode(translated_sentence.tolist())
             actual_sent = self.vocab.batch_decode(batch['tgt'].tolist())

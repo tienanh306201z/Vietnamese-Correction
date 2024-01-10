@@ -45,7 +45,7 @@ class Predictor:
         print("Device: ", self.device)
         print("Loaded model")
 
-    def predict_ngram(self, ngram, beamsearch=False):
+    def predict_ngram(self, ngram):
         '''
           Denoise for ngram
           ngram: text
@@ -54,11 +54,7 @@ class Predictor:
         src = src.unsqueeze(0)
         src = src.to(self.device)
 
-        if beamsearch:
-            translated_sentence = batch_translate_beam_search(src, self.model)
-            prob = None
-        else:
-            translated_sentence, prob = translate(src, self.model)
+        translated_sentence, prob = translate(src, self.model)
         # print(translated_sentence)
         pred_sent = self.vocab.decode(translated_sentence.tolist()[0])
 
@@ -163,9 +159,9 @@ class Predictor:
         self.model.load_state_dict(state_dict, strict=False)
 
 if __name__ == "__main__":
-    predictor = Predictor(weight_path='weights/seq2seq.pth')
+    predictor = Predictor(weight_path='weights/seq2seq.pth', have_att=True)
     synther = SynthesizeData()
-    noise_sent = synther.add_noise("tôi là sinh viên", percent_err=0.15)
+    noise_sent = synther.add_noise("tôi là sinh viênn", percent_err=0.15)
 
     print("Noise: ", noise_sent)
     correct = predictor.spelling_correct(noise_sent)

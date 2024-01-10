@@ -10,7 +10,6 @@ DEC_DROPOUT = 0.5
 
 NUM_ITERS = 80000
 BATCH_SIZE = 4
-BEAM_SEARCH = False
 PRINT_PER_ITER = 1
 VALID_PER_ITER = 500
 MAX_SAMPLE_VALID = 10000
@@ -18,9 +17,9 @@ MAX_SAMPLE_VALID = 10000
 MAX_LR = 0.0003    # lr will inscrease from 2e-5 to MAX_LR in iter 0 -> iter NUM_ITERS * PCT_START, then decrease to 2e-5
 PCT_START = 0.1
 
-LOG = "./log/loger_luong.log"
-CHECKPOINT = './checkpoint/seq2seq_luong_checkpoint.pth'
-EXPORT = './weights/seq2seq_luong.pth'
+LOG = "./log/loger.log"
+CHECKPOINT = './checkpoint/seq2seq_checkpoint.pth'
+EXPORT = './weights/seq2seq.pth'
 
 MAXLEN = 46
 NGRAM = 5

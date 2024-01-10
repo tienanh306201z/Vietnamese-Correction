@@ -142,12 +142,12 @@ class Seq2Seq_WithoutAtt(nn.Module):
         outputs = outputs.transpose(0, 1).contiguous()
         return outputs
 
-    def expand_memory(self, memory, beam_size):
-        hidden, encoder_outputs = memory
-        hidden = hidden.repeat(beam_size, 1)
-        encoder_outputs = encoder_outputs.repeat(1, beam_size, 1)
+    # def expand_memory(self, memory, beam_size):
+    #     hidden, encoder_outputs = memory
+    #     hidden = hidden.repeat(beam_size, 1)
+    #     encoder_outputs = encoder_outputs.repeat(1, beam_size, 1)
 
-        return (hidden, encoder_outputs)
+    #     return (hidden, encoder_outputs)
 
     def get_memory(self, memory, i):
         hidden, encoder_outputs = memory
